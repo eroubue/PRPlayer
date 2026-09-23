@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Dalamud.CN.Net.Sdk/15.0.0">
+  <PropertyGroup>
+    <Version>0.1.0.0</Version>
+    <Description>Media playback plugin for PromeRotation — audio now, video API reserved.</Description>
+    <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
+    <IsPackable>false</IsPackable>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <DalamudPackagerEnabled>false</DalamudPackagerEnabled>
+    <!-- Path to the PromeRotation build output directory (contains PromeRotation.dll).
+         Override on the command line: dotnet build -p:PromeRotationDir="..." -->
+    <PromeRotationDir Condition="'$(PromeRotationDir)' == ''">..\..\PromeRotation\PromeRotation\bin\Debug\</PromeRotationDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- PRPlayer 是 PromeRotation 的二级插件,不是 Dalamud 插件,不需要打包器 -->
+    <PackageReference Remove="DalamudPackager" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="PromeRotation">
+      <HintPath>$(PromeRotationDir)PromeRotation.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="PromeRotation.Scripting">
+      <HintPath>$(PromeRotationDir)PromeRotation.Scripting.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="ECommons">
+      <HintPath>$(PromeRotationDir)ECommons.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NAudio" Version="2.2.1" />
+  </ItemGroup>
+</Project>
