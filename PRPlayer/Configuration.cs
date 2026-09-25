@@ -9,6 +9,12 @@ public sealed class Configuration
 {
     public float MasterVolume { get; set; } = 1.0f;
 
+    /// <summary>是否跟随游戏原生音量设置。</summary>
+    public bool FollowGameVolume { get; set; } = true;
+
+    /// <summary>跟随时使用哪个游戏声道类别。</summary>
+    public GameVolumeCategory GameVolumeCategory { get; set; } = GameVolumeCategory.SoundEffects;
+
     private static readonly JsonSerializerOptions JsonOptions = new() { WriteIndented = true };
 
     private static string ConfigPath =>

@@ -27,6 +27,7 @@ public sealed class AudioEngine : IMediaPlayer
     private readonly Dictionary<int, Channel> channels = new();
     private int nextHandle;
     private float masterVolume = 1.0f;
+    private float externalScale = 1.0f;
     private bool disposed;
 
     public event Action<int>? PlaybackFinished;
@@ -49,6 +50,22 @@ public sealed class AudioEngine : IMediaPlayer
     public int ActiveCount
     {
         get { lock (gate) return channels.Count; }
+    }
+
+    /// <summary>外部音量系数(0-1),如游戏原生音量。与主音量、通道音量叠乘,实时作用于所有通道。</summary>
+    public float ExternalScale
+    {
+        get { lock (gate) return externalScale; }
+        set
+        {
+            value = Math.Clamp(value, 0f, 1f);
+            lock (gate)
+            {
+                externalScale = value;
+                foreach (var ch in channels.Values)
+                    ApplyVolume(ch);
+            }
+        }
     }
 
     public int PlayAudio(string path, float volume = 1.0f)
@@ -147,7 +164,7 @@ public sealed class AudioEngine : IMediaPlayer
     }
 
     private void ApplyVolume(Channel ch)
-        => ch.VolumeProvider.Volume = Math.Clamp(ch.Volume * masterVolume, 0f, 1f);
+        => ch.VolumeProvider.Volume = Math.Clamp(ch.Volume * masterVolume * externalScale, 0f, 1f);
 
     private void OnPlaybackStopped(int handle)
     {

@@ -24,6 +24,8 @@ dotnet build -c Debug
 
 然后在 PromeRotation 插件管理窗口中启用。注意:Release 模式下插件加载需通过宿主的网络验证,开发期请用 Debug 构建的宿主。
 
+> 开发者(插件 / ACR 作者)请阅读 [docs/INTEGRATION.md](docs/INTEGRATION.md) —— 完整的 IPC API 参考、句柄生命周期与可直接复制的调用封装。
+
 ## IPC API(供其他插件 / ACR 调用)
 
 前缀 `PRPlayer.`,通过 Dalamud IPC 调用,无需引用本程序集:
@@ -49,6 +51,8 @@ Svc.PluginInterface.GetIpcSubscriber<int, object>("PRPlayer.Stop").InvokeAction(
 ```
 
 支持格式:mp3 / wav / aac / m4a / wma 等 Windows Media Foundation 支持的格式(经 NAudio `MediaFoundationReader`)。
+
+音量模型:最终音量 = 插件主音量 × 通道音量 × 游戏音量系数。默认跟随游戏"系统设置 → 音量"的主音量与所选声道(默认音效)实时联动,静音同样生效;可在配置界面关闭或切换跟随声道(音效 / BGM / 语音 / 系统音 / 环境音)。
 
 ## 后续:视频播放
 

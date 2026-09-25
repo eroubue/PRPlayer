@@ -1,0 +1,20 @@
+[
+  {
+    "id": "PRPlayer",
+    "name": "PRPlayer",
+    "author": "Nag0mi",
+    "description": "Media playback for other plugins and ACRs (audio now, video reserved).",
+    "version": "0.1.0.0",
+    "tags": [
+      "development",
+      "extension"
+    ],
+    "apiVersion": 15,
+    "referencePromeVersion": "1.5.10.4",
+    "downloadUrl": "https://github.com/eroubue/PRPlayer",
+    "coverUrl": "",
+    "sourceRepositoryUrl": "https://github.com/eroubue/PRPlayer",
+    "sponsorUrl": "",
+    "sha256": "27521cdb7ce6bec1b9cba79e22c6d15165062f22127b351233395a8188f33046"
+  }
+]
